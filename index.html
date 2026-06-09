@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Individual barriers → barrier types → root causes</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #FAFAF8; padding: 12px; }
+  svg { display: block; width: 100%; }
+  .fl { fill: none; opacity: 0.32; transition: opacity 0.15s; cursor: pointer; stroke-width: 1.4; }
+  .fl:hover, .fl.active { opacity: 0.9; }
+  .fl.dim { opacity: 0.04; }
+  .stream { fill: none; opacity: 0.35; transition: opacity 0.2s; }
+  .stream.active { opacity: 0.85; }
+  .stream.dim { opacity: 0.04; }
+  .cb { cursor: pointer; transition: opacity 0.2s; }
+  .cb rect { transition: opacity 0.2s, filter 0.2s; }
+  .cb text { transition: opacity 0.2s; }
+  .cb.dim rect { opacity: 0.15; }
+  .cb.dim text { opacity: 0.15; }
+  .cb.highlighted rect { filter: brightness(0.88); stroke-width: 2.2px; }
+  .cb.selected rect { filter: brightness(0.82); stroke-width: 2.8px; }
+  .bt { font-size: 8px; fill: #555; }
+  .sh { font-size: 8.5px; font-weight: 700; }
+  .cl { font-size: 10px; font-weight: 600; text-anchor: middle; dominant-baseline: middle; }
+  .gl { font-size: 9px; font-weight: 700; text-anchor: middle; }
+</style>
+</head>
+<body>
+<svg viewBox="0 0 1000 2320" xmlns="http://www.w3.org/2000/svg">
+
+<text font-size="13" font-weight="600" x="500" y="22" text-anchor="middle" fill="#222">Individual barriers → barrier types → root causes</text>
+<text font-size="8.5" x="500" y="38" text-anchor="middle" fill="#888">Click a cluster to highlight its barriers and connections · Click background to reset</text>
+<text font-size="10" font-weight="600" x="220" y="56" text-anchor="middle" fill="#333">Individual barriers</text>
+<text font-size="10" font-weight="600" x="720" y="56" text-anchor="middle" fill="#333">Barrier types &amp; root causes</text>
+
+<!-- BARRIER TYPES group — inner boxes have 8px padding from border
+     group y=66, inner start y=84 (18px header)
+     AW h=62: y=84–146  mid=115
+     KN h=130:y=154–284 mid=219
+     TR h=58: y=292–350 mid=321
+     RD h=62: y=358–420 mid=389
+     group bottom = 420+8=428  height=428-66=362
+-->
+<rect x="476" y="66" width="484" height="362" rx="8" fill="#FEF3E0" stroke="#D4860A" stroke-width="0.8" stroke-dasharray="5,3"/>
+<text class="gl" x="718" y="80" fill="#D4860A">BARRIER TYPES</text>
+<g class="cb" id="cAW" onclick="hlC('AW')"><rect x="490" y="84" width="456" height="62" rx="5" fill="#FCDFA0" stroke="#D4860A" stroke-width="1.2"/><text class="cl" x="718" y="115" fill="#7A4A00">Awareness gap · n=7</text></g>
+<g class="cb" id="cKN" onclick="hlC('KN')"><rect x="490" y="154" width="456" height="130" rx="5" fill="#FCDFA0" stroke="#D4860A" stroke-width="1.2"/><text class="cl" x="718" y="219" fill="#7A4A00">Knowledge gap · n=14</text></g>
+<g class="cb" id="cTR" onclick="hlC('TR')"><rect x="490" y="292" width="456" height="58" rx="5" fill="#FCDFA0" stroke="#D4860A" stroke-width="1.2"/><text class="cl" x="718" y="321" fill="#7A4A00">Transparency &amp; traceability deficit · n=6</text></g>
+<g class="cb" id="cRD" onclick="hlC('RD')"><rect x="490" y="358" width="456" height="62" rx="5" fill="#FCDFA0" stroke="#D4860A" stroke-width="1.2"/><text class="cl" x="718" y="389" fill="#7A4A00">Relational disconnect · n=7</text></g>
+
+<!-- ROOT CAUSES group — gap 16px after BT group (428+16=444)
+     ED h=140: y=462–602 mid=532
+     PO h=88:  y=610–698 mid=654
+     PA h=58:  y=706–764 mid=735
+     SC h=124: y=772–896 mid=834
+     group bottom = 896+8=904  height=904-444=460
+-->
+<rect x="476" y="444" width="484" height="460" rx="8" fill="#F5DDD4" stroke="#8B2500" stroke-width="0.8" stroke-dasharray="5,3"/>
+<text class="gl" x="718" y="458" fill="#8B2500">ROOT CAUSES</text>
+<g class="cb" id="cED" onclick="hlC('ED')"><rect x="490" y="466" width="456" height="140" rx="5" fill="#E8917A" stroke="#8B2500" stroke-width="1.2"/><text class="cl" x="718" y="536" fill="#3A0E00">Economic disincentives · n=25</text></g>
+<g class="cb" id="cPO" onclick="hlC('PO')"><rect x="490" y="614" width="456" height="88" rx="5" fill="#E8917A" stroke="#8B2500" stroke-width="1.2"/><text class="cl" x="718" y="658" fill="#3A0E00">Policy &amp; institutional inertia · n=15</text></g>
+<g class="cb" id="cPA" onclick="hlC('PA')"><rect x="490" y="710" width="456" height="58" rx="5" fill="#E8917A" stroke="#8B2500" stroke-width="1.2"/><text class="cl" x="718" y="739" fill="#3A0E00">Power asymmetry · n=6</text></g>
+<g class="cb" id="cSC" onclick="hlC('SC')"><rect x="490" y="776" width="456" height="120" rx="5" fill="#E8917A" stroke="#8B2500" stroke-width="1.2"/><text class="cl" x="718" y="836" fill="#3A0E00">Systemic complexity · n=19</text></g>
+
+<!-- RIGHT-SIDE STREAMS (BT → RC), arcing from right edge x=946
+     BT mids: AW=115, KN=219, TR=321, RD=389
+     RC mids: ED=536, PO=658, PA=739, SC=836
+-->
+<path class="stream" id="s_AW_SC" data-from="AW" data-to="SC" stroke="#F5A623" stroke-width="12.5" d="M946,104 C992,104 992,836 946,836"/>
+<path class="stream" id="s_AW_ED" data-from="AW" data-to="ED" stroke="#F5A623" stroke-width="2.5"  d="M946,115 C978,115 978,536 946,536"/>
+<path class="stream" id="s_AW_PA" data-from="AW" data-to="PA" stroke="#F5A623" stroke-width="2.5"  d="M946,125 C968,125 968,739 946,739"/>
+<path class="stream" id="s_KN_SC" data-from="KN" data-to="SC" stroke="#D4860A" stroke-width="27.5" d="M946,206 C1000,206 1000,836 946,836"/>
+<path class="stream" id="s_KN_PO" data-from="KN" data-to="PO" stroke="#D4860A" stroke-width="7.5"  d="M946,228 C986,228 986,658 946,658"/>
+<path class="stream" id="s_TR_SC" data-from="TR" data-to="SC" stroke="#C87A00" stroke-width="12.5" d="M946,310 C990,310 990,836 946,836"/>
+<path class="stream" id="s_TR_PO" data-from="TR" data-to="PO" stroke="#C87A00" stroke-width="2.5"  d="M946,322 C975,322 975,658 946,658"/>
+<path class="stream" id="s_RD_SC" data-from="RD" data-to="SC" stroke="#A85E00" stroke-width="10"   d="M946,376 C994,376 994,836 946,836"/>
+<path class="stream" id="s_RD_PA" data-from="RD" data-to="PA" stroke="#A85E00" stroke-width="5"    d="M946,387 C980,387 980,739 946,739"/>
+<path class="stream" id="s_RD_PO" data-from="RD" data-to="PO" stroke="#A85E00" stroke-width="2.5"  d="M946,398 C965,398 965,658 946,658"/>
+
+<!-- INDIVIDUAL BARRIERS left col, lines to x=490 -->
+<!-- AW -->
+<text class="sh" x="8" y="78" fill="#D4860A">Awareness gap</text>
+<text class="bt" x="12" y="93">Input providers: not aware of AE or AE inputs</text><path class="fl" id="f0" data-cl="AW" stroke="#F5A623" d="M392,90 C435,90 462,104 490,104"/>
+<text class="bt" x="12" y="109">Input providers: AE seen as opposing technical innovation</text><path class="fl" id="f1" data-cl="AW" stroke="#F5A623" d="M392,106 C435,106 462,108 490,108"/>
+<text class="bt" x="12" y="125">Farmers: lack of awareness on AE practices, costs and benefits</text><path class="fl" id="f2" data-cl="AW" stroke="#F5A623" d="M392,122 C435,122 462,112 490,112"/>
+<text class="bt" x="12" y="141">Consumers: unaware of added value of AE products</text><path class="fl" id="f3" data-cl="AW" stroke="#F5A623" d="M392,138 C435,138 462,116 490,116"/>
+<text class="bt" x="12" y="157">Consumers: lack of knowledge as excuse for buying cheapest</text><path class="fl" id="f4" data-cl="AW" stroke="#F5A623" d="M392,154 C435,154 462,120 490,120"/>
+<text class="bt" x="12" y="173">Policy makers: lack of awareness on AE practices and impacts</text><path class="fl" id="f5" data-cl="AW" stroke="#F5A623" d="M392,170 C435,170 462,126 490,126"/>
+<text class="bt" x="12" y="189">NGO staff: lack of awareness about AE</text><path class="fl" id="f6" data-cl="AW" stroke="#F5A623" d="M392,186 C435,186 462,132 490,132"/>
+
+<!-- KN -->
+<text class="sh" x="8" y="210" fill="#D4860A">Knowledge gap</text>
+<text class="bt" x="12" y="225">Input providers: lack knowledge to advise on AE inputs</text><path class="fl" id="f7" data-cl="KN" stroke="#D4860A" d="M392,222 C435,222 462,172 490,172"/>
+<text class="bt" x="12" y="241">Farmers: lack of knowledge to implement AE practices</text><path class="fl" id="f8" data-cl="KN" stroke="#D4860A" d="M392,238 C435,238 462,180 490,180"/>
+<text class="bt" x="12" y="257">Processors: little insight on production systems/performance</text><path class="fl" id="f9" data-cl="KN" stroke="#D4860A" d="M392,254 C435,254 462,188 490,188"/>
+<text class="bt" x="12" y="273">Consumers: unclear benefits of AE food</text><path class="fl" id="f10" data-cl="KN" stroke="#D4860A" d="M392,270 C435,270 462,196 490,196"/>
+<text class="bt" x="12" y="289">Policy makers: lack of practical examples</text><path class="fl" id="f11" data-cl="KN" stroke="#D4860A" d="M392,286 C435,286 462,204 490,204"/>
+<text class="bt" x="12" y="305">Policy makers: lack of evidence on costs/benefits at scale</text><path class="fl" id="f12" data-cl="KN" stroke="#D4860A" d="M392,302 C435,302 462,212 490,212"/>
+<text class="bt" x="12" y="321">NGO staff: lack of knowledge and communication materials</text><path class="fl" id="f13" data-cl="KN" stroke="#D4860A" d="M392,318 C435,318 462,220 490,220"/>
+<text class="bt" x="12" y="337">Extension agents: lack of knowledge on AE costs/benefits</text><path class="fl" id="f14" data-cl="KN" stroke="#D4860A" d="M392,334 C435,334 462,228 490,228"/>
+<text class="bt" x="12" y="353">Teachers: lack of knowledge on AE environmental/social benefits</text><path class="fl" id="f15" data-cl="KN" stroke="#D4860A" d="M392,350 C435,350 462,236 490,236"/>
+<text class="bt" x="12" y="369">Teachers: lack of experience and practical examples</text><path class="fl" id="f16" data-cl="KN" stroke="#D4860A" d="M392,366 C435,366 462,244 490,244"/>
+<text class="bt" x="12" y="385">Researchers: lack of interdisciplinary experience</text><path class="fl" id="f17" data-cl="KN" stroke="#D4860A" d="M392,382 C435,382 462,252 490,252"/>
+<text class="bt" x="12" y="401">Financial staff: lack of knowledge on AE benefits</text><path class="fl" id="f18" data-cl="KN" stroke="#D4860A" d="M392,398 C435,398 462,260 490,260"/>
+<text class="bt" x="12" y="417">Financial staff: lack of ROI calculations for AE vs conventional</text><path class="fl" id="f19" data-cl="KN" stroke="#D4860A" d="M392,414 C435,414 462,268 490,268"/>
+<text class="bt" x="12" y="433">Financial staff: familiarity with financing conventional only</text><path class="fl" id="f20" data-cl="KN" stroke="#D4860A" d="M392,430 C435,430 462,276 490,276"/>
+
+<!-- TR -->
+<text class="sh" x="8" y="455" fill="#C87A00">Transparency &amp; traceability deficit</text>
+<text class="bt" x="12" y="470">Processors: difficulty communicating environmental/social benefits</text><path class="fl" id="f21" data-cl="TR" stroke="#C87A00" d="M392,467 C435,467 462,302 490,302"/>
+<text class="bt" x="12" y="486">Retailers: low transparency and traceability of products</text><path class="fl" id="f22" data-cl="TR" stroke="#C87A00" d="M392,483 C435,483 462,310 490,310"/>
+<text class="bt" x="12" y="502">Retailers: difficulty communicating AE benefits to justify premium</text><path class="fl" id="f23" data-cl="TR" stroke="#C87A00" d="M392,499 C435,499 462,316 490,316"/>
+<text class="bt" x="12" y="518">Consumers: unclear origin of AE food</text><path class="fl" id="f24" data-cl="TR" stroke="#C87A00" d="M392,515 C435,515 462,322 490,322"/>
+<text class="bt" x="12" y="534">Consumers: AE products difficult to distinguish from conventional</text><path class="fl" id="f25" data-cl="TR" stroke="#C87A00" d="M392,531 C435,531 462,328 490,328"/>
+<text class="bt" x="12" y="550">Consumers: confusion about multitude of labels</text><path class="fl" id="f26" data-cl="TR" stroke="#C87A00" d="M392,547 C435,547 462,336 490,336"/>
+
+<!-- RD -->
+<text class="sh" x="8" y="572" fill="#A85E00">Relational disconnect</text>
+<text class="bt" x="12" y="587">Farmers: marginalization by conventional farmers</text><path class="fl" id="f27" data-cl="RD" stroke="#A85E00" d="M392,584 C435,584 462,368 490,368"/>
+<text class="bt" x="12" y="603">Farmers: inaccessible extension services</text><path class="fl" id="f28" data-cl="RD" stroke="#A85E00" d="M392,600 C435,600 462,374 490,374"/>
+<text class="bt" x="12" y="619">Farmers: lack of farmer-researcher collaboration</text><path class="fl" id="f29" data-cl="RD" stroke="#A85E00" d="M392,616 C435,616 462,380 490,380"/>
+<text class="bt" x="12" y="635">Retailers: disconnected from local producers</text><path class="fl" id="f30" data-cl="RD" stroke="#A85E00" d="M392,632 C435,632 462,386 490,386"/>
+<text class="bt" x="12" y="651">Consumers: spatial distance between consumers and producers</text><path class="fl" id="f31" data-cl="RD" stroke="#A85E00" d="M392,648 C435,648 462,392 490,392"/>
+<text class="bt" x="12" y="667">Consumers: lack of relations to farming / farmers</text><path class="fl" id="f32" data-cl="RD" stroke="#A85E00" d="M392,664 C435,664 462,398 490,398"/>
+<text class="bt" x="12" y="683">Teachers: language barriers / not embedded in local realities</text><path class="fl" id="f33" data-cl="RD" stroke="#A85E00" d="M392,680 C435,680 462,406 490,406"/>
+
+<!-- ED -->
+<text class="sh" x="8" y="708" fill="#8B2500">Economic disincentives</text>
+<text class="bt" x="12" y="723">Input providers: time constraints for learning AE</text><path class="fl" id="f34" data-cl="ED" stroke="#C85A2A" d="M392,720 C435,720 462,484 490,484"/>
+<text class="bt" x="12" y="739">Input providers: AE transition not paid for</text><path class="fl" id="f35" data-cl="ED" stroke="#C85A2A" d="M392,736 C435,736 462,492 490,492"/>
+<text class="bt" x="12" y="755">Input providers: cannot afford full AE portfolio</text><path class="fl" id="f36" data-cl="ED" stroke="#C85A2A" d="M392,752 C435,752 462,500 490,500"/>
+<text class="bt" x="12" y="771">Input providers: lower demand / AE products too expensive</text><path class="fl" id="f37" data-cl="ED" stroke="#C85A2A" d="M392,768 C435,768 462,506 490,506"/>
+<text class="bt" x="12" y="787">Input providers: policy disincentives / subsidies for conventional</text><path class="fl" id="f38" data-cl="ED" stroke="#C85A2A" d="M392,784 C435,784 462,512 490,512"/>
+<text class="bt" x="12" y="803">Input providers: market incentives to sell conventional inputs</text><path class="fl" id="f39" data-cl="ED" stroke="#C85A2A" d="M392,800 C435,800 462,518 490,518"/>
+<text class="bt" x="12" y="819">Farmers: higher costs without price premium</text><path class="fl" id="f40" data-cl="ED" stroke="#C85A2A" d="M392,816 C435,816 462,524 490,524"/>
+<text class="bt" x="12" y="835">Farmers: lack of price premium for AE produce</text><path class="fl" id="f41" data-cl="ED" stroke="#C85A2A" d="M392,832 C435,832 462,530 490,530"/>
+<text class="bt" x="12" y="851">Farmers: profitability pressure</text><path class="fl" id="f42" data-cl="ED" stroke="#C85A2A" d="M392,848 C435,848 462,534 490,534"/>
+<text class="bt" x="12" y="867">Farmers: lack of access to cash or credit</text><path class="fl" id="f43" data-cl="ED" stroke="#C85A2A" d="M392,864 C435,864 462,538 490,538"/>
+<text class="bt" x="12" y="883">Farmers: distorted incentives / NGOs give away conventional inputs</text><path class="fl" id="f44" data-cl="ED" stroke="#C85A2A" d="M392,880 C435,880 462,542 490,542"/>
+<text class="bt" x="12" y="899">Farmers: lack of incentives to invest in AE transition</text><path class="fl" id="f45" data-cl="ED" stroke="#C85A2A" d="M392,896 C435,896 462,546 490,546"/>
+<text class="bt" x="12" y="915">Farmers: high labour demands of AE practices</text><path class="fl" id="f46" data-cl="ED" stroke="#C85A2A" d="M392,912 C435,912 462,550 490,550"/>
+<text class="bt" x="12" y="931">Processors: low concern for environmental footprint</text><path class="fl" id="f47" data-cl="ED" stroke="#C85A2A" d="M392,928 C435,928 462,554 490,554"/>
+<text class="bt" x="12" y="947">Processors: inertia / large processors have lucrative deals</text><path class="fl" id="f48" data-cl="ED" stroke="#C85A2A" d="M392,944 C435,944 462,558 490,558"/>
+<text class="bt" x="12" y="963">Processors: consumer/industry price pressure</text><path class="fl" id="f49" data-cl="ED" stroke="#C85A2A" d="M392,960 C435,960 462,562 490,562"/>
+<text class="bt" x="12" y="979">Retailers: pressure for standardized year-round produce</text><path class="fl" id="f50" data-cl="ED" stroke="#C85A2A" d="M392,976 C435,976 462,566 490,566"/>
+<text class="bt" x="12" y="995">Retailers: priority on quality/price over sustainability</text><path class="fl" id="f51" data-cl="ED" stroke="#C85A2A" d="M392,992 C435,992 462,570 490,570"/>
+<text class="bt" x="12" y="1011">Consumers: financial and time constraints for direct markets</text><path class="fl" id="f52" data-cl="ED" stroke="#C85A2A" d="M392,1008 C435,1008 462,576 490,576"/>
+<text class="bt" x="12" y="1027">NGO staff: dependent on decreasing financial resources</text><path class="fl" id="f53" data-cl="ED" stroke="#C85A2A" d="M392,1024 C435,1024 462,582 490,582"/>
+<text class="bt" x="12" y="1043">NGO staff: little market demand / less developed AE value chain</text><path class="fl" id="f54" data-cl="ED" stroke="#C85A2A" d="M392,1040 C435,1040 462,586 490,586"/>
+<text class="bt" x="12" y="1059">Extension agents: commercialization of extension services</text><path class="fl" id="f55" data-cl="ED" stroke="#C85A2A" d="M392,1056 C435,1056 462,578 490,578"/>
+<text class="bt" x="12" y="1075">Teachers: lack of student incentives (agribusiness partnerships)</text><path class="fl" id="f56" data-cl="ED" stroke="#C85A2A" d="M392,1072 C435,1072 462,572 490,572"/>
+<text class="bt" x="12" y="1091">Financial staff: complexity of AE investments costly to evaluate</text><path class="fl" id="f57" data-cl="ED" stroke="#C85A2A" d="M392,1088 C435,1088 462,566 490,566"/>
+<text class="bt" x="12" y="1107">Financial staff: perception of high risk in AE investments</text><path class="fl" id="f58" data-cl="ED" stroke="#C85A2A" d="M392,1104 C435,1104 462,560 490,560"/>
+
+<!-- PO -->
+<text class="sh" x="8" y="1132" fill="#A83800">Policy &amp; institutional inertia</text>
+<text class="bt" x="12" y="1147">Farmers: skewed knowledge systems favor conventional</text><path class="fl" id="f59" data-cl="PO" stroke="#A83800" d="M392,1144 C435,1144 462,626 490,626"/>
+<text class="bt" x="12" y="1163">Farmers: distorted incentives / NGOs give away conventional inputs</text><path class="fl" id="f60" data-cl="PO" stroke="#A83800" d="M392,1160 C435,1160 462,632 490,632"/>
+<text class="bt" x="12" y="1179">Farmers: lack of incentives to invest in AE transition</text><path class="fl" id="f61" data-cl="PO" stroke="#A83800" d="M392,1176 C435,1176 462,638 490,638"/>
+<text class="bt" x="12" y="1195">Retailers: lack of mandatory social/environmental standards</text><path class="fl" id="f62" data-cl="PO" stroke="#A83800" d="M392,1192 C435,1192 462,644 490,644"/>
+<text class="bt" x="12" y="1211">Policy makers: government support geared to large-scale conventional</text><path class="fl" id="f63" data-cl="PO" stroke="#A83800" d="M392,1208 C435,1208 462,650 490,650"/>
+<text class="bt" x="12" y="1227">Policy makers: strong conventional farming lobby</text><path class="fl" id="f64" data-cl="PO" stroke="#A83800" d="M392,1224 C435,1224 462,656 490,656"/>
+<text class="bt" x="12" y="1243">Policy makers: favoring incremental over transformational change</text><path class="fl" id="f65" data-cl="PO" stroke="#A83800" d="M392,1240 C435,1240 462,662 490,662"/>
+<text class="bt" x="12" y="1259">Policy makers: decreasing subsidies might deter voters</text><path class="fl" id="f66" data-cl="PO" stroke="#A83800" d="M392,1256 C435,1256 462,668 490,668"/>
+<text class="bt" x="12" y="1275">NGO staff: chronically underfunded for training</text><path class="fl" id="f67" data-cl="PO" stroke="#A83800" d="M392,1272 C435,1272 462,674 490,674"/>
+<text class="bt" x="12" y="1291">NGO staff: challenge promoting AE in hegemony of conventional circuits</text><path class="fl" id="f68" data-cl="PO" stroke="#A83800" d="M392,1288 C435,1288 462,680 490,680"/>
+<text class="bt" x="12" y="1307">Extension agents: AE not part of extension curriculum</text><path class="fl" id="f69" data-cl="PO" stroke="#A83800" d="M392,1304 C435,1304 462,628 490,628"/>
+<text class="bt" x="12" y="1323">Extension agents: chronically underfunded public extension</text><path class="fl" id="f70" data-cl="PO" stroke="#A83800" d="M392,1320 C435,1320 462,634 490,634"/>
+<text class="bt" x="12" y="1339">Extension agents: contradictory agendas / hesitant to promote AE</text><path class="fl" id="f71" data-cl="PO" stroke="#A83800" d="M392,1336 C435,1336 462,640 490,640"/>
+<text class="bt" x="12" y="1355">Researchers: research self-reflexive rather than action-oriented</text><path class="fl" id="f72" data-cl="PO" stroke="#A83800" d="M392,1352 C435,1352 462,646 490,646"/>
+<text class="bt" x="12" y="1371">Researchers: limited funding for AE research</text><path class="fl" id="f73" data-cl="PO" stroke="#A83800" d="M392,1368 C435,1368 462,652 490,652"/>
+<text class="bt" x="12" y="1387">Researchers: deeply rooted resistance to change in research institutions</text><path class="fl" id="f74" data-cl="PO" stroke="#A83800" d="M392,1384 C435,1384 462,658 490,658"/>
+<text class="bt" x="12" y="1403">Researchers: disciplinary silos hamper knowledge integration</text><path class="fl" id="f75" data-cl="PO" stroke="#A83800" d="M392,1400 C435,1400 462,664 490,664"/>
+
+<!-- PA -->
+<text class="sh" x="8" y="1428" fill="#8B2500">Power asymmetry</text>
+<text class="bt" x="12" y="1443">Extension agents: top-down prescriptive approach dominant</text><path class="fl" id="f76" data-cl="PA" stroke="#8B2500" d="M392,1440 C435,1440 462,720 490,720"/>
+<text class="bt" x="12" y="1459">NGO staff: community orgs overwhelmed by internal inequities</text><path class="fl" id="f77" data-cl="PA" stroke="#8B2500" d="M392,1456 C435,1456 462,726 490,726"/>
+<text class="bt" x="12" y="1475">NGO staff: power dynamics in funding agendas (global north HQ)</text><path class="fl" id="f78" data-cl="PA" stroke="#8B2500" d="M392,1472 C435,1472 462,732 490,732"/>
+<text class="bt" x="12" y="1491">Researchers: strong mainstream agricultural narratives</text><path class="fl" id="f79" data-cl="PA" stroke="#8B2500" d="M392,1488 C435,1488 462,738 490,738"/>
+<text class="bt" x="12" y="1507">Researchers: colonial mindset / western science privileged</text><path class="fl" id="f80" data-cl="PA" stroke="#8B2500" d="M392,1504 C435,1504 462,744 490,744"/>
+<text class="bt" x="12" y="1523">Financial staff: preference for large-scale over smallholder AE</text><path class="fl" id="f81" data-cl="PA" stroke="#8B2500" d="M392,1520 C435,1520 462,750 490,750"/>
+
+<!-- SC -->
+<text class="sh" x="8" y="1548" fill="#6B1800">Systemic complexity</text>
+<text class="bt" x="12" y="1563">Input providers: space constraints for bulky organic products</text><path class="fl" id="f82" data-cl="SC" stroke="#6B1800" d="M392,1560 C435,1560 462,788 490,788"/>
+<text class="bt" x="12" y="1579">Input providers: quality fluctuations / costly quality assurance</text><path class="fl" id="f83" data-cl="SC" stroke="#6B1800" d="M392,1576 C435,1576 462,796 490,796"/>
+<text class="bt" x="12" y="1595">Farmers: complexity of information on AE practices</text><path class="fl" id="f84" data-cl="SC" stroke="#6B1800" d="M392,1592 C435,1592 462,804 490,804"/>
+<text class="bt" x="12" y="1611">Farmers: inertia of existing logistics / commercial system</text><path class="fl" id="f85" data-cl="SC" stroke="#6B1800" d="M392,1608 C435,1608 462,812 490,812"/>
+<text class="bt" x="12" y="1627">Processors: difficulties sourcing AE products reliably</text><path class="fl" id="f86" data-cl="SC" stroke="#6B1800" d="M392,1624 C435,1624 462,818 490,818"/>
+<text class="bt" x="12" y="1643">Processors: difficulty handling quality variability / standardization pressure</text><path class="fl" id="f87" data-cl="SC" stroke="#6B1800" d="M392,1640 C435,1640 462,824 490,824"/>
+<text class="bt" x="12" y="1659">Retailers: internationally sourced seasonal-independent chains</text><path class="fl" id="f88" data-cl="SC" stroke="#6B1800" d="M392,1656 C435,1656 462,830 490,830"/>
+<text class="bt" x="12" y="1675">Policy makers: difficulty in monitoring and evaluation at scale</text><path class="fl" id="f89" data-cl="SC" stroke="#6B1800" d="M392,1672 C435,1672 462,836 490,836"/>
+<text class="bt" x="12" y="1691">Policy makers: complexity of governing the AE transformation</text><path class="fl" id="f90" data-cl="SC" stroke="#6B1800" d="M392,1688 C435,1688 462,842 490,842"/>
+<text class="bt" x="12" y="1707">NGO staff: limited reach and visibility at national level</text><path class="fl" id="f91" data-cl="SC" stroke="#6B1800" d="M392,1704 C435,1704 462,820 490,820"/>
+<text class="bt" x="12" y="1723">NGO staff: lack of network and trust for AE buy-in</text><path class="fl" id="f92" data-cl="SC" stroke="#6B1800" d="M392,1720 C435,1720 462,826 490,826"/>
+<text class="bt" x="12" y="1739">Extension agents: high admin burden / little time for complex advice</text><path class="fl" id="f93" data-cl="SC" stroke="#6B1800" d="M392,1736 C435,1736 462,832 490,832"/>
+<text class="bt" x="12" y="1755">Extension agents: knowledge intensity of AE practices challenging</text><path class="fl" id="f94" data-cl="SC" stroke="#6B1800" d="M392,1752 C435,1752 462,838 490,838"/>
+<text class="bt" x="12" y="1771">Teachers: formal AE concept doesn't fit daily realities</text><path class="fl" id="f95" data-cl="SC" stroke="#6B1800" d="M392,1768 C435,1768 462,814 490,814"/>
+<text class="bt" x="12" y="1787">Teachers: teaching specialization hampers interdisciplinary AE</text><path class="fl" id="f96" data-cl="SC" stroke="#6B1800" d="M392,1784 C435,1784 462,820 490,820"/>
+<text class="bt" x="12" y="1803">Teachers: disagreement on teaching contents / ideology</text><path class="fl" id="f97" data-cl="SC" stroke="#6B1800" d="M392,1800 C435,1800 462,826 490,826"/>
+<text class="bt" x="12" y="1819">Researchers: work in isolation / no consistent collaboration</text><path class="fl" id="f98" data-cl="SC" stroke="#6B1800" d="M392,1816 C435,1816 462,832 490,832"/>
+<text class="bt" x="12" y="1835">Researchers: conceptual disagreements when collaborating</text><path class="fl" id="f99" data-cl="SC" stroke="#6B1800" d="M392,1832 C435,1832 462,838 490,838"/>
+<text class="bt" x="12" y="1851">Researchers: scattered / inhomogeneous AE datasets</text><path class="fl" id="f100" data-cl="SC" stroke="#6B1800" d="M392,1848 C435,1848 462,844 490,844"/>
+
+<!-- LEGEND -->
+<rect x="8" y="1878" width="680" height="68" rx="6" fill="none" stroke="#ddd" stroke-width="0.5"/>
+<text font-size="9" font-weight="600" x="20" y="1895" fill="#555">Colour gradient light → dark = barrier types → root causes:</text>
+<circle cx="24" cy="1912" r="4" fill="#F5A623"/><text font-size="8" x="32" y="1916" fill="#555">Awareness gap</text>
+<circle cx="110" cy="1912" r="4" fill="#D4860A"/><text font-size="8" x="118" y="1916" fill="#555">Knowledge gap</text>
+<circle cx="196" cy="1912" r="4" fill="#C87A00"/><text font-size="8" x="204" y="1916" fill="#555">Transparency deficit</text>
+<circle cx="296" cy="1912" r="4" fill="#A85E00"/><text font-size="8" x="304" y="1916" fill="#555">Relational disconnect</text>
+<circle cx="24" cy="1930" r="4" fill="#C85A2A"/><text font-size="8" x="32" y="1934" fill="#555">Economic disincentives</text>
+<circle cx="130" cy="1930" r="4" fill="#A83800"/><text font-size="8" x="138" y="1934" fill="#555">Policy &amp; institutional inertia</text>
+<circle cx="256" cy="1930" r="4" fill="#8B2500"/><text font-size="8" x="264" y="1934" fill="#555">Power asymmetry</text>
+<circle cx="348" cy="1930" r="4" fill="#6B1800"/><text font-size="8" x="356" y="1934" fill="#555">Systemic complexity</text>
+<text font-size="8" x="450" y="1914" fill="#555">Right-side arcs = barrier type → root cause connections</text>
+<text font-size="8" x="450" y="1926" fill="#555">Cluster box size = total barriers in cluster</text>
+<text font-size="8" x="450" y="1938" fill="#555">Click any cluster to highlight · Click background to reset</text>
+</svg>
+
+<script>
+const connected={
+  AW:['SC','ED','PA'], KN:['SC','PO'], TR:['SC','PO'], RD:['SC','PA','PO'],
+  SC:['AW','KN','TR','RD'], PO:['KN','TR','RD'], PA:['AW','RD'], ED:['AW']
+};
+const streamMap={
+  AW:['s_AW_SC','s_AW_ED','s_AW_PA'], KN:['s_KN_SC','s_KN_PO'],
+  TR:['s_TR_SC','s_TR_PO'], RD:['s_RD_SC','s_RD_PA','s_RD_PO'],
+  SC:['s_AW_SC','s_KN_SC','s_TR_SC','s_RD_SC'],
+  PO:['s_KN_PO','s_TR_PO','s_RD_PO'],
+  PA:['s_AW_PA','s_RD_PA'], ED:['s_AW_ED']
+};
+function reset(){
+  document.querySelectorAll('.fl').forEach(l=>l.classList.remove('active','dim'));
+  document.querySelectorAll('.stream').forEach(s=>s.classList.remove('active','dim'));
+  document.querySelectorAll('.cb').forEach(b=>b.classList.remove('dim','highlighted','selected'));
+}
+function hlC(cl){
+  reset();
+  document.querySelectorAll('.fl').forEach(l=>{
+    const m=l.getAttribute('data-cl')===cl;
+    l.classList.toggle('active',m); l.classList.toggle('dim',!m);
+  });
+  const activeStreams=streamMap[cl]||[];
+  document.querySelectorAll('.stream').forEach(s=>{
+    const m=activeStreams.includes(s.id);
+    s.classList.toggle('active',m); s.classList.toggle('dim',!m);
+  });
+  const linked=connected[cl]||[];
+  document.querySelectorAll('.cb').forEach(b=>{
+    const c=b.id.replace('c','');
+    if(c===cl){ b.classList.add('selected'); }
+    else if(linked.includes(c)){ b.classList.add('highlighted'); }
+    else { b.classList.add('dim'); }
+  });
+}
+document.querySelector('svg').addEventListener('click',e=>{
+  if(!e.target.closest('.cb')) reset();
+});
+</script>
+</body>
+</html>
