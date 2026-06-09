@@ -8,8 +8,16 @@
   .fl { fill: none; opacity: 0.32; transition: opacity 0.15s; cursor: pointer; stroke-width: 1.4; }
   .fl:hover, .fl.active { opacity: 0.9; }
   .fl.dim { opacity: 0.04; }
-  .cb { cursor: pointer; transition: opacity 0.15s; }
-  .cb.dim { opacity: 0.15; }
+  .stream { fill: none; opacity: 0.35; transition: opacity 0.2s; }
+  .stream.active { opacity: 0.85; }
+  .stream.dim { opacity: 0.04; }
+  .cb { cursor: pointer; transition: opacity 0.2s; }
+  .cb rect { transition: opacity 0.2s, filter 0.2s; }
+  .cb text { transition: opacity 0.2s; }
+  .cb.dim rect { opacity: 0.15; }
+  .cb.dim text { opacity: 0.15; }
+  .cb.highlighted rect { filter: brightness(0.88); stroke-width: 2.2 !important; }
+  .cb.selected rect { filter: brightness(0.82); stroke-width: 2.8 !important; }
   .bar-text { font-size: 8px; fill: var(--color-text-secondary,#555); font-family: inherit; }
   .sec-head { font-size: 8.5px; font-weight: 700; font-family: inherit; }
   .cl-label { font-size: 10px; font-weight: 600; font-family: inherit; text-anchor: middle; dominant-baseline: middle; }
@@ -20,7 +28,7 @@
 <svg viewBox="0 0 1000 2300" xmlns="http://www.w3.org/2000/svg">
 
 <text font-size="13" font-weight="600" x="500" y="22" text-anchor="middle" fill="var(--color-text-primary,#222)">Individual barriers → barrier types → root causes</text>
-<text font-size="8.5" x="500" y="38" text-anchor="middle" fill="var(--color-text-secondary,#888)">Click a cluster to highlight its barriers · Click background to reset</text>
+<text font-size="8.5" x="500" y="38" text-anchor="middle" fill="var(--color-text-secondary,#888)">Click a cluster to highlight its barriers and connections · Click background to reset</text>
 <text font-size="10" font-weight="600" x="220" y="56" text-anchor="middle" fill="var(--color-text-primary,#333)">Individual barriers</text>
 <text font-size="10" font-weight="600" x="720" y="56" text-anchor="middle" fill="var(--color-text-primary,#333)">Barrier types &amp; root causes</text>
 
@@ -39,21 +47,23 @@
 <g class="cb" id="cPA" onclick="hlC('PA')"><rect x="486" y="744" width="264" height="60" rx="5" fill="#E8917A" stroke="#8B2500" stroke-width="1.2"/><text class="cl-label" x="618" y="774" fill="#3A0E00">Power asymmetry · n=6</text></g>
 <g class="cb" id="cSC" onclick="hlC('SC')"><rect x="486" y="816" width="264" height="114" rx="5" fill="#E8917A" stroke="#8B2500" stroke-width="1.2"/><text class="cl-label" x="618" y="873" fill="#3A0E00">Systemic complexity · n=19</text></g>
 
-<!-- SYMPTOM -> ROOT CAUSE STREAMS -->
-<path stroke="#F5A623" stroke-width="12.5" fill="none" opacity="0.35" d="M750,112 C880,112 880,873 750,873"/>
-<path stroke="#F5A623" stroke-width="2.5" fill="none" opacity="0.35" d="M750,122 C860,122 860,555 750,555"/>
-<path stroke="#F5A623" stroke-width="2.5" fill="none" opacity="0.35" d="M750,130 C840,130 840,774 750,774"/>
-<path stroke="#D4860A" stroke-width="27.5" fill="none" opacity="0.35" d="M750,220 C900,220 900,873 750,873"/>
-<path stroke="#D4860A" stroke-width="7.5" fill="none" opacity="0.35" d="M750,240 C870,240 870,687 750,687"/>
-<path stroke="#C87A00" stroke-width="12.5" fill="none" opacity="0.35" d="M750,338 C880,338 880,873 750,873"/>
-<path stroke="#C87A00" stroke-width="2.5" fill="none" opacity="0.35" d="M750,348 C860,348 860,687 750,687"/>
-<path stroke="#A85E00" stroke-width="10" fill="none" opacity="0.35" d="M750,415 C890,415 890,873 750,873"/>
-<path stroke="#A85E00" stroke-width="5" fill="none" opacity="0.35" d="M750,423 C870,423 870,774 750,774"/>
-<path stroke="#A85E00" stroke-width="2.5" fill="none" opacity="0.35" d="M750,431 C850,431 850,687 750,687"/>
+<!-- RIGHT SIDE STREAMS (barrier type → root cause, with IDs for highlighting) -->
+<!-- AW streams: AW->SC:5, AW->ED:1, AW->PA:1 -->
+<path class="stream" id="s_AW_SC" data-from="AW" data-to="SC" stroke="#F5A623" stroke-width="12.5" d="M750,112 C880,112 880,873 750,873"/>
+<path class="stream" id="s_AW_ED" data-from="AW" data-to="ED" stroke="#F5A623" stroke-width="2.5" d="M750,122 C860,122 860,555 750,555"/>
+<path class="stream" id="s_AW_PA" data-from="AW" data-to="PA" stroke="#F5A623" stroke-width="2.5" d="M750,130 C840,130 840,774 750,774"/>
+<!-- KN streams: KN->SC:11, KN->PO:3 -->
+<path class="stream" id="s_KN_SC" data-from="KN" data-to="SC" stroke="#D4860A" stroke-width="27.5" d="M750,220 C900,220 900,873 750,873"/>
+<path class="stream" id="s_KN_PO" data-from="KN" data-to="PO" stroke="#D4860A" stroke-width="7.5" d="M750,240 C870,240 870,687 750,687"/>
+<!-- TR streams: TR->SC:5, TR->PO:1 -->
+<path class="stream" id="s_TR_SC" data-from="TR" data-to="SC" stroke="#C87A00" stroke-width="12.5" d="M750,338 C880,338 880,873 750,873"/>
+<path class="stream" id="s_TR_PO" data-from="TR" data-to="PO" stroke="#C87A00" stroke-width="2.5" d="M750,348 C860,348 860,687 750,687"/>
+<!-- RD streams: RD->SC:4, RD->PA:2, RD->PO:1 -->
+<path class="stream" id="s_RD_SC" data-from="RD" data-to="SC" stroke="#A85E00" stroke-width="10" d="M750,415 C890,415 890,873 750,873"/>
+<path class="stream" id="s_RD_PA" data-from="RD" data-to="PA" stroke="#A85E00" stroke-width="5" d="M750,423 C870,423 870,774 750,774"/>
+<path class="stream" id="s_RD_PO" data-from="RD" data-to="PO" stroke="#A85E00" stroke-width="2.5" d="M750,431 C850,431 850,687 750,687"/>
 
-<!-- INDIVIDUAL BARRIERS — colour gradient throughout -->
-
-<!-- AW: #F5A623 -->
+<!-- INDIVIDUAL BARRIERS -->
 <text class="sec-head" x="8" y="78" fill="#D4860A">Awareness gap</text>
 <text class="bar-text" x="12" y="93">Input providers: not aware of AE or AE inputs</text>
 <path class="fl" id="f0" data-cl="AW" stroke="#F5A623" d="M392,90 C435,90 460,108 486,108"/>
@@ -70,7 +80,6 @@
 <text class="bar-text" x="12" y="189">NGO staff: lack of awareness about AE</text>
 <path class="fl" id="f6" data-cl="AW" stroke="#F5A623" d="M392,186 C435,186 460,140 486,140"/>
 
-<!-- KN: #D4860A -->
 <text class="sec-head" x="8" y="210" fill="#D4860A">Knowledge gap</text>
 <text class="bar-text" x="12" y="225">Input providers: lack knowledge to advise on AE inputs</text>
 <path class="fl" id="f7" data-cl="KN" stroke="#D4860A" d="M392,222 C435,222 460,186 486,186"/>
@@ -101,7 +110,6 @@
 <text class="bar-text" x="12" y="433">Financial staff: familiarity with financing conventional only</text>
 <path class="fl" id="f20" data-cl="KN" stroke="#D4860A" d="M392,430 C435,430 460,290 486,290"/>
 
-<!-- TR: #C87A00 -->
 <text class="sec-head" x="8" y="455" fill="#C87A00">Transparency &amp; traceability deficit</text>
 <text class="bar-text" x="12" y="470">Processors: difficulty communicating environmental/social benefits</text>
 <path class="fl" id="f21" data-cl="TR" stroke="#C87A00" d="M392,467 C435,467 460,328 486,328"/>
@@ -116,7 +124,6 @@
 <text class="bar-text" x="12" y="550">Consumers: confusion about multitude of labels</text>
 <path class="fl" id="f26" data-cl="TR" stroke="#C87A00" d="M392,547 C435,547 460,360 486,360"/>
 
-<!-- RD: #A85E00 -->
 <text class="sec-head" x="8" y="572" fill="#A85E00">Relational disconnect</text>
 <text class="bar-text" x="12" y="587">Farmers: marginalization by conventional farmers</text>
 <path class="fl" id="f27" data-cl="RD" stroke="#A85E00" d="M392,584 C435,584 460,400 486,400"/>
@@ -133,7 +140,6 @@
 <text class="bar-text" x="12" y="683">Teachers: language barriers / not embedded in local realities</text>
 <path class="fl" id="f33" data-cl="RD" stroke="#A85E00" d="M392,680 C435,680 460,442 486,442"/>
 
-<!-- ED: #C85A2A -->
 <text class="sec-head" x="8" y="708" fill="#8B2500">Economic disincentives</text>
 <text class="bar-text" x="12" y="723">Input providers: time constraints for learning AE</text>
 <path class="fl" id="f34" data-cl="ED" stroke="#C85A2A" d="M392,720 C435,720 460,500 486,500"/>
@@ -186,7 +192,6 @@
 <text class="bar-text" x="12" y="1107">Financial staff: perception of high risk in AE investments</text>
 <path class="fl" id="f58" data-cl="ED" stroke="#C85A2A" d="M392,1104 C435,1104 460,590 486,590"/>
 
-<!-- PO: #A83800 -->
 <text class="sec-head" x="8" y="1132" fill="#A83800">Policy &amp; institutional inertia</text>
 <text class="bar-text" x="12" y="1147">Farmers: skewed knowledge systems favor conventional</text>
 <path class="fl" id="f59" data-cl="PO" stroke="#A83800" d="M392,1144 C435,1144 460,658 486,658"/>
@@ -223,7 +228,6 @@
 <text class="bar-text" x="12" y="1403">Researchers: disciplinary silos hamper knowledge integration</text>
 <path class="fl" id="f75" data-cl="PO" stroke="#A83800" d="M392,1400 C435,1400 460,696 486,696"/>
 
-<!-- PA: #8B2500 -->
 <text class="sec-head" x="8" y="1428" fill="#8B2500">Power asymmetry</text>
 <text class="bar-text" x="12" y="1443">Extension agents: top-down prescriptive approach dominant</text>
 <path class="fl" id="f76" data-cl="PA" stroke="#8B2500" d="M392,1440 C435,1440 460,754 486,754"/>
@@ -238,7 +242,6 @@
 <text class="bar-text" x="12" y="1523">Financial staff: preference for large-scale over smallholder AE</text>
 <path class="fl" id="f81" data-cl="PA" stroke="#8B2500" d="M392,1520 C435,1520 460,784 486,784"/>
 
-<!-- SC: #6B1800 -->
 <text class="sec-head" x="8" y="1548" fill="#6B1800">Systemic complexity</text>
 <text class="bar-text" x="12" y="1563">Input providers: space constraints for bulky organic products</text>
 <path class="fl" id="f82" data-cl="SC" stroke="#6B1800" d="M392,1560 C435,1560 460,828 486,828"/>
@@ -282,43 +285,77 @@
 <!-- LEGEND -->
 <rect x="8" y="1878" width="680" height="68" rx="6" fill="none" stroke="#ddd" stroke-width="0.5"/>
 <text font-size="9" font-weight="600" x="20" y="1895" fill="var(--color-text-secondary,#555)">Colour gradient light → dark = barrier types → root causes:</text>
-<circle cx="24" cy="1912" r="4" fill="#F5A623"/>
-<text font-size="8" x="32" y="1916" fill="var(--color-text-secondary,#555)">Awareness gap</text>
-<circle cx="110" cy="1912" r="4" fill="#D4860A"/>
-<text font-size="8" x="118" y="1916" fill="var(--color-text-secondary,#555)">Knowledge gap</text>
-<circle cx="196" cy="1912" r="4" fill="#C87A00"/>
-<text font-size="8" x="204" y="1916" fill="var(--color-text-secondary,#555)">Transparency deficit</text>
-<circle cx="296" cy="1912" r="4" fill="#A85E00"/>
-<text font-size="8" x="304" y="1916" fill="var(--color-text-secondary,#555)">Relational disconnect</text>
-<circle cx="24" cy="1930" r="4" fill="#C85A2A"/>
-<text font-size="8" x="32" y="1934" fill="var(--color-text-secondary,#555)">Economic disincentives</text>
-<circle cx="130" cy="1930" r="4" fill="#A83800"/>
-<text font-size="8" x="138" y="1934" fill="var(--color-text-secondary,#555)">Policy &amp; institutional inertia</text>
-<circle cx="256" cy="1930" r="4" fill="#8B2500"/>
-<text font-size="8" x="264" y="1934" fill="var(--color-text-secondary,#555)">Power asymmetry</text>
-<circle cx="348" cy="1930" r="4" fill="#6B1800"/>
-<text font-size="8" x="356" y="1934" fill="var(--color-text-secondary,#555)">Systemic complexity</text>
+<circle cx="24" cy="1912" r="4" fill="#F5A623"/><text font-size="8" x="32" y="1916" fill="var(--color-text-secondary,#555)">Awareness gap</text>
+<circle cx="110" cy="1912" r="4" fill="#D4860A"/><text font-size="8" x="118" y="1916" fill="var(--color-text-secondary,#555)">Knowledge gap</text>
+<circle cx="196" cy="1912" r="4" fill="#C87A00"/><text font-size="8" x="204" y="1916" fill="var(--color-text-secondary,#555)">Transparency deficit</text>
+<circle cx="296" cy="1912" r="4" fill="#A85E00"/><text font-size="8" x="304" y="1916" fill="var(--color-text-secondary,#555)">Relational disconnect</text>
+<circle cx="24" cy="1930" r="4" fill="#C85A2A"/><text font-size="8" x="32" y="1934" fill="var(--color-text-secondary,#555)">Economic disincentives</text>
+<circle cx="130" cy="1930" r="4" fill="#A83800"/><text font-size="8" x="138" y="1934" fill="var(--color-text-secondary,#555)">Policy &amp; institutional inertia</text>
+<circle cx="256" cy="1930" r="4" fill="#8B2500"/><text font-size="8" x="264" y="1934" fill="var(--color-text-secondary,#555)">Power asymmetry</text>
+<circle cx="348" cy="1930" r="4" fill="#6B1800"/><text font-size="8" x="356" y="1934" fill="var(--color-text-secondary,#555)">Systemic complexity</text>
 <text font-size="8" x="450" y="1910" fill="var(--color-text-secondary,#555)">Cluster box size = total barriers</text>
-<text font-size="8" x="450" y="1922" fill="var(--color-text-secondary,#555)">Right-side streams = barrier type → root cause</text>
+<text font-size="8" x="450" y="1922" fill="var(--color-text-secondary,#555)">Right-side streams = barrier type → root cause connections</text>
 <text font-size="8" x="450" y="1934" fill="var(--color-text-secondary,#555)">Click any cluster to highlight · Click background to reset</text>
 </svg>
 
 <script>
+// Connection map: which clusters are linked via right-side streams
+const connected = {
+  AW: ['SC','ED','PA'],   // AW feeds into SC, ED, PA
+  KN: ['SC','PO'],
+  TR: ['SC','PO'],
+  RD: ['SC','PA','PO'],
+  SC: ['AW','KN','TR','RD'],  // SC feeds back into these BTs
+  PO: ['KN','TR','RD'],
+  PA: ['AW','RD'],
+  ED: ['AW']
+};
+
+// Which right-side streams belong to each cluster
+const streamMap = {
+  AW: ['s_AW_SC','s_AW_ED','s_AW_PA'],
+  KN: ['s_KN_SC','s_KN_PO'],
+  TR: ['s_TR_SC','s_TR_PO'],
+  RD: ['s_RD_SC','s_RD_PA','s_RD_PO'],
+  SC: ['s_AW_SC','s_KN_SC','s_TR_SC','s_RD_SC'],
+  PO: ['s_KN_PO','s_TR_PO','s_RD_PO'],
+  PA: ['s_AW_PA','s_RD_PA'],
+  ED: ['s_AW_ED']
+};
+
+function reset(){
+  document.querySelectorAll('.fl').forEach(l=>l.classList.remove('active','dim'));
+  document.querySelectorAll('.stream').forEach(s=>s.classList.remove('active','dim'));
+  document.querySelectorAll('.cb').forEach(b=>b.classList.remove('dim','highlighted','selected'));
+}
+
 function hlC(cl){
+  reset();
+  // highlight individual barrier lines for this cluster
   document.querySelectorAll('.fl').forEach(l=>{
     const m=l.getAttribute('data-cl')===cl;
     l.classList.toggle('active',m);
     l.classList.toggle('dim',!m);
   });
+  // highlight right-side streams for this cluster
+  const activeStreams = streamMap[cl]||[];
+  document.querySelectorAll('.stream').forEach(s=>{
+    const m=activeStreams.includes(s.id);
+    s.classList.toggle('active',m);
+    s.classList.toggle('dim',!m);
+  });
+  // highlight connected cluster boxes
+  const linked = connected[cl]||[];
   document.querySelectorAll('.cb').forEach(b=>{
-    b.classList.toggle('dim',b.id!=='c'+cl);
+    const c=b.id.replace('c','');
+    if(c===cl){ b.classList.add('selected'); }
+    else if(linked.includes(c)){ b.classList.add('highlighted'); }
+    else { b.classList.add('dim'); }
   });
 }
+
 document.querySelector('svg').addEventListener('click',e=>{
-  if(!e.target.closest('.cb')){
-    document.querySelectorAll('.fl').forEach(l=>l.classList.remove('active','dim'));
-    document.querySelectorAll('.cb').forEach(b=>b.classList.remove('dim'));
-  }
+  if(!e.target.closest('.cb')) reset();
 });
 </script>
 </body>
